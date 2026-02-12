@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
       key: _scaffoldKey,
 
       appBar: AppBar(
+        backgroundColor: Colors.blue[300],
         title: const Text('Eduguide'),
         centerTitle: false,
         actions: [

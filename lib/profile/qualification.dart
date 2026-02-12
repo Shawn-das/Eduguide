@@ -1,4 +1,5 @@
 import 'package:eduguide/profile/custom_navigation.dart';
+import 'package:eduguide/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -125,8 +126,25 @@ class _QualificationPageState extends State<QualificationPage> {
       backgroundColor: const Color(0xfff4f6fb),
 
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: const Text("Qualifications"),
+        backgroundColor: Colors.blue[300],
+        title: const Text('Eduguide'),
+        centerTitle: false,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_outlined),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.account_circle_outlined),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfilePage()),
+              );
+            },
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
 
       body: Padding(

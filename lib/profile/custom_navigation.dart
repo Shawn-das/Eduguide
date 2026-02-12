@@ -24,7 +24,7 @@ class CustomBottomNav extends StatelessWidget {
         page = const DocumentPage();
         break;
       case 3:
-        page = const ExamScorePage();
+        page = const ScorePage();
         break;
       default:
         page = const ProfilePage();

@@ -38,6 +38,7 @@ class _SignUpState extends State<SignUp> {
       await Supabase.instance.client.from('profiles').insert({
         'id': user.id,
         'full_name': fullName,
+        'email': email,
       });
 
       if (!mounted) return;

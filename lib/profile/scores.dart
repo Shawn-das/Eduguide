@@ -1,247 +1,384 @@
 import 'package:eduguide/profile/custom_navigation.dart';
+import 'package:eduguide/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class ExamScorePage extends StatefulWidget {
-  const ExamScorePage({super.key});
+class ScorePage extends StatefulWidget {
+  const ScorePage({super.key});
 
   @override
-  State<ExamScorePage> createState() => _ExamScorePageState();
+  State<ScorePage> createState() => _ScorePageState();
 }
 
-class _ExamScorePageState extends State<ExamScorePage> {
+class _ScorePageState extends State<ScorePage> {
   final supabase = Supabase.instance.client;
 
-  bool showIelts = true;
-  String? recordId;
+  String? editingExam;
+  Map<String, dynamic>? existingScores;
 
-  final overall = TextEditingController();
-  final listening = TextEditingController();
-  final reading = TextEditingController();
-  final writing = TextEditingController();
-  final speaking = TextEditingController();
+  // ================= CONTROLLERS =================
+
+  // IELTS
+  final ieltsOverall = TextEditingController();
+  final ieltsReading = TextEditingController();
+  final ieltsWriting = TextEditingController();
+  final ieltsListening = TextEditingController();
+  final ieltsSpeaking = TextEditingController();
+
+  // GRE
+  final greOverall = TextEditingController();
+  final greVerbal = TextEditingController();
+  final greQuant = TextEditingController();
+  final greAnalytical = TextEditingController();
+
+  // TOEFL
+  final toeflOverall = TextEditingController();
+  final toeflReading = TextEditingController();
+  final toeflWriting = TextEditingController();
+  final toeflListening = TextEditingController();
+  final toeflSpeaking = TextEditingController();
+
+  // GMAT
+  final gmatOverall = TextEditingController();
+  final gmatVerbal = TextEditingController();
+  final gmatQuant = TextEditingController();
+  final gmatAwa = TextEditingController();
+  final gmatIr = TextEditingController();
+
+  // =================================================
 
   @override
   void initState() {
     super.initState();
-    fetchIELTS();
+    fetchScores();
   }
 
-  Future<void> fetchIELTS() async {
+  @override
+  void dispose() {
+    ieltsOverall.dispose();
+    ieltsReading.dispose();
+    ieltsWriting.dispose();
+    ieltsListening.dispose();
+    ieltsSpeaking.dispose();
+
+    greOverall.dispose();
+    greVerbal.dispose();
+    greQuant.dispose();
+    greAnalytical.dispose();
+
+    toeflOverall.dispose();
+    toeflReading.dispose();
+    toeflWriting.dispose();
+    toeflListening.dispose();
+    toeflSpeaking.dispose();
+
+    gmatOverall.dispose();
+    gmatVerbal.dispose();
+    gmatQuant.dispose();
+    gmatAwa.dispose();
+    gmatIr.dispose();
+
+    super.dispose();
+  }
+
+ Future<void> fetchScores() async {
+  final user = supabase.auth.currentUser;
+  if (user == null) return;
+
+ final response = await supabase
+    .from('exam_scores')
+    .select()
+    .eq('user_id', user.id) as List<dynamic>;
+
+
+  final dataMap = {
+    for (var item in response) item['exam_type']: item
+  };
+
+  setState(() {
+    existingScores = dataMap.cast<String, dynamic>();
+  });
+
+  // ===== IELTS =====
+  if (dataMap["IELTS"] != null) {
+    final d = dataMap["IELTS"];
+    ieltsOverall.text = d["overall"]?.toString() ?? "";
+    ieltsReading.text = d["reading"]?.toString() ?? "";
+    ieltsWriting.text = d["writing"]?.toString() ?? "";
+    ieltsListening.text = d["listening"]?.toString() ?? "";
+    ieltsSpeaking.text = d["speaking"]?.toString() ?? "";
+  }
+
+  // ===== GRE =====
+  if (dataMap["GRE"] != null) {
+    final d = dataMap["GRE"];
+    greOverall.text = d["overall"]?.toString() ?? "";
+    greVerbal.text = d["verbal"]?.toString() ?? "";
+    greQuant.text = d["quantitative"]?.toString() ?? "";
+    greAnalytical.text = d["analytical"]?.toString() ?? "";
+  }
+
+  // ===== TOEFL =====
+  if (dataMap["TOEFL"] != null) {
+    final d = dataMap["TOEFL"];
+    toeflOverall.text = d["overall"]?.toString() ?? "";
+    toeflReading.text = d["reading"]?.toString() ?? "";
+    toeflWriting.text = d["writing"]?.toString() ?? "";
+    toeflListening.text = d["listening"]?.toString() ?? "";
+    toeflSpeaking.text = d["speaking"]?.toString() ?? "";
+  }
+
+  // ===== GMAT =====
+  if (dataMap["GMAT"] != null) {
+    final d = dataMap["GMAT"];
+    gmatOverall.text = d["overall"]?.toString() ?? "";
+    gmatVerbal.text = d["verbal"]?.toString() ?? "";
+    gmatQuant.text = d["quantitative"]?.toString() ?? "";
+    gmatAwa.text = d["awa"]?.toString() ?? "";
+    gmatIr.text = d["ir"]?.toString() ?? "";
+  }
+}
+
+  Future<void> saveScore(String examType, Map<String, dynamic> data) async {
     final user = supabase.auth.currentUser;
     if (user == null) return;
 
-    final data = await supabase
-        .from('exam_scores')
-        .select()
-        .eq('user_id', user.id)
-        .eq('exam', 'IELTS')
-        .maybeSingle();
+    data['user_id'] = user.id;
+    data['exam_type'] = examType;
 
-    if (data != null) {
-      recordId = data['id'];
-      overall.text = data['overall']?.toString() ?? '';
-      listening.text = data['listening']?.toString() ?? '';
-      reading.text = data['reading']?.toString() ?? '';
-      writing.text = data['writing']?.toString() ?? '';
-      speaking.text = data['speaking']?.toString() ?? '';
-    }
-  }
+    await supabase.from('exam_scores').upsert(data);
 
-  Future<void> saveIELTS() async {
-    final user = supabase.auth.currentUser;
-    if (user == null) return;
-
-    await supabase.from('exam_scores').upsert({
-      'id': recordId,
-      'user_id': user.id,
-      'exam': 'IELTS',
-      'overall': double.tryParse(overall.text),
-      'listening': double.tryParse(listening.text),
-      'reading': double.tryParse(reading.text),
-      'writing': double.tryParse(writing.text),
-      'speaking': double.tryParse(speaking.text),
-    });
-
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text("IELTS score saved")));
-  }
-
-  Future<void> deleteIELTS() async {
-    if (recordId == null) return;
-
-    await supabase.from('exam_scores').delete().eq('id', recordId!);
+    await fetchScores();
 
     setState(() {
-      recordId = null;
-      overall.clear();
-      listening.clear();
-      reading.clear();
-      writing.clear();
-      speaking.clear();
+      editingExam = null;
     });
 
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text("IELTS score deleted")));
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Saved successfully")),
+    );
   }
 
-  Widget scoreField(String label, TextEditingController controller) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade400),
-        borderRadius: BorderRadius.circular(10),
+  Widget buildExamCard(String title, Widget form) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      elevation: 3,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(label, style: const TextStyle(fontSize: 12)),
-          TextField(
-            controller: controller,
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              border: InputBorder.none,
-              hintText: "Enter score",
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.edit),
+                  onPressed: () {
+                    setState(() {
+                      editingExam =
+                          editingExam == title ? null : title;
+                    });
+                  },
+                )
+              ],
             ),
-          ),
-        ],
+            if (editingExam == title) form
+          ],
+        ),
       ),
     );
   }
 
-  Widget collapsedTile(String title) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.08), blurRadius: 8),
-        ],
+  Widget buildTextField(
+      String label, TextEditingController controller) {
+    return Padding(
+      padding: const EdgeInsets.all(6),
+      child: TextField(
+        controller: controller,
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
-          Text("IELTS", style: TextStyle(fontSize: 18)),
-          Icon(Icons.edit),
-        ],
-      ),
+    );
+  }
+
+  Widget buildRowField(
+      String label1,
+      TextEditingController controller1,
+      String label2,
+      TextEditingController controller2) {
+    return Row(
+      children: [
+        Expanded(child: buildTextField(label1, controller1)),
+        Expanded(child: buildTextField(label2, controller2)),
+      ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xfff4f6fb),
-
-     appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.blue,
-        title: const Text("Profile", style: TextStyle(color: Colors.white)),
-        leading: IconButton(
-          icon: const Icon(Icons.menu, color: Colors.white),
-          onPressed: () {},
-        ),
+      appBar: AppBar(
+        backgroundColor: Colors.blue[300],
+        title: const Text('Eduguide'),
+        centerTitle: false,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_outlined),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.account_circle_outlined),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfilePage()),
+              );
+            },
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
-
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            // IELTS CARD
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    // ignore: deprecated_member_use
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 10,
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+
+            // IELTS
+            buildExamCard(
+              "IELTS",
+              Column(
                 children: [
-                  const Text(
-                    "IELTS",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 16),
-
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: scoreField("IELTS SCORE", overall),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: OutlinedButton.icon(
-                          onPressed: () {},
-                          icon: const Icon(Icons.upload),
-                          label: const Text("Upload doc"),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 12),
-
-                  Row(
-                    children: [
-                      Expanded(child: scoreField("Listening", listening)),
-                      const SizedBox(width: 12),
-                      Expanded(child: scoreField("Reading", reading)),
-                    ],
-                  ),
-
-                  const SizedBox(height: 12),
-
-                  Row(
-                    children: [
-                      Expanded(child: scoreField("Writing", writing)),
-                      const SizedBox(width: 12),
-                      Expanded(child: scoreField("Speaking", speaking)),
-                    ],
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(
-                        onPressed: deleteIELTS,
-                        child: const Text(
-                          "Delete",
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: saveIELTS,
-                        child: const Text("Save"),
-                      ),
-                    ],
-                  ),
+                  buildTextField("Overall", ieltsOverall),
+                  buildRowField("Listening", ieltsListening,
+                      "Reading", ieltsReading),
+                  buildRowField("Writing", ieltsWriting,
+                      "Speaking", ieltsSpeaking),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        saveScore("IELTS", {
+                          "overall": double.tryParse(ieltsOverall.text),
+                          "reading": double.tryParse(ieltsReading.text),
+                          "writing": double.tryParse(ieltsWriting.text),
+                          "listening":
+                              double.tryParse(ieltsListening.text),
+                          "speaking":
+                              double.tryParse(ieltsSpeaking.text),
+                        });
+                      },
+                      child: const Text("Save"),
+                    ),
+                  )
                 ],
               ),
             ),
 
-            const SizedBox(height: 12),
-            collapsedTile("GRE"),
-            collapsedTile("TOEFL"),
-            collapsedTile("GMAT"),
+            // GRE
+            buildExamCard(
+              "GRE",
+              Column(
+                children: [
+                  buildTextField("Overall", greOverall),
+                  buildRowField("Analytical", greAnalytical,
+                      "Verbal", greVerbal),
+                  buildTextField("Quantitative", greQuant),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        saveScore("GRE", {
+                          "overall": double.tryParse(greOverall.text),
+                          "verbal": double.tryParse(greVerbal.text),
+                          "quantitative":
+                              double.tryParse(greQuant.text),
+                          "analytical":
+                              double.tryParse(greAnalytical.text),
+                        });
+                      },
+                      child: const Text("Save"),
+                    ),
+                  )
+                ],
+              ),
+            ),
+
+            // TOEFL
+            buildExamCard(
+              "TOEFL",
+              Column(
+                children: [
+                  buildTextField("Overall", toeflOverall),
+                  buildRowField("Listening", toeflListening,
+                      "Reading", toeflReading),
+                  buildRowField("Writing", toeflWriting,
+                      "Speaking", toeflSpeaking),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        saveScore("TOEFL", {
+                          "overall": double.tryParse(toeflOverall.text),
+                          "reading": double.tryParse(toeflReading.text),
+                          "writing": double.tryParse(toeflWriting.text),
+                          "listening":
+                              double.tryParse(toeflListening.text),
+                          "speaking":
+                              double.tryParse(toeflSpeaking.text),
+                        });
+                      },
+                      child: const Text("Save"),
+                    ),
+                  )
+                ],
+              ),
+            ),
+
+            // GMAT
+            buildExamCard(
+              "GMAT",
+              Column(
+                children: [
+                  buildTextField("Overall", gmatOverall),
+                  buildRowField("AWA", gmatAwa,
+                      "IR", gmatIr),
+                  buildRowField("Quantitative", gmatQuant,
+                      "Verbal", gmatVerbal),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        saveScore("GMAT", {
+                          "overall": double.tryParse(gmatOverall.text),
+                          "verbal": double.tryParse(gmatVerbal.text),
+                          "quantitative":
+                              double.tryParse(gmatQuant.text),
+                          "awa": double.tryParse(gmatAwa.text),
+                          "ir": double.tryParse(gmatIr.text),
+                        });
+                      },
+                      child: const Text("Save"),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),
-
-    bottomNavigationBar: const CustomBottomNav(currentIndex: 3),
+      bottomNavigationBar: const CustomBottomNav(currentIndex: 3),
     );
   }
 }

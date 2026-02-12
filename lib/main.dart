@@ -1,11 +1,12 @@
+//import 'package:eduguide/authentication/onboarding.dart';
 import 'package:eduguide/authentication/onboarding.dart';
+import 'package:eduguide/features/about.dart';
 import 'package:eduguide/features/admin_forum_page.dart';
 import 'package:eduguide/features/ai_prediction.dart';
 import 'package:eduguide/features/application_status.dart';
 import 'package:eduguide/features/courses_page.dart';
 import 'package:eduguide/features/university_page.dart';
 import 'package:eduguide/pages/home_page.dart';
-import 'package:eduguide/profile/about_page.dart';
 import 'package:eduguide/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
