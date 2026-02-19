@@ -1,4 +1,4 @@
-import 'package:eduguide/pages/dash_borad.dart';
+import 'package:eduguide/pages/dash_board.dart';
 import 'package:eduguide/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 

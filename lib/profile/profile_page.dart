@@ -113,14 +113,135 @@ class _ProfilePageState extends State<ProfilePage> {
     fetchProfile();
   }
 
-  void showEditDialog(String field, String currentValue) {
+  void showEditDialog(String field, String currentValue) async {
     final controller = TextEditingController(text: currentValue);
+
+    Widget inputWidget;
+
+    // ---------- PHONE (Numeric Keyboard Only) ----------
+    if (field == "phone") {
+      inputWidget = TextField(
+        controller: controller,
+        keyboardType: TextInputType.phone,
+        decoration: const InputDecoration(
+          hintText: "Enter your phone number",
+          border: OutlineInputBorder(),
+        ),
+      );
+    }
+    // ---------- GENDER (Dropdown) ----------
+    else if (field == "gender") {
+      String selectedGender = currentValue.isNotEmpty ? currentValue : "Male";
+
+      inputWidget = StatefulBuilder(
+        builder: (context, setState) {
+          return DropdownButtonFormField<String>(
+            value: selectedGender,
+            decoration: const InputDecoration(border: OutlineInputBorder()),
+            items: ["Male", "Female", "Other"]
+                .map(
+                  (gender) =>
+                      DropdownMenuItem(value: gender, child: Text(gender)),
+                )
+                .toList(),
+            onChanged: (value) {
+              setState(() {
+                selectedGender = value!;
+              });
+            },
+          );
+        },
+      );
+
+      controller.text = selectedGender;
+    }
+    // ---------- DOB (Date Picker) ----------
+    else if (field == "dob") {
+      inputWidget = TextField(
+        controller: controller,
+        readOnly: true,
+        decoration: const InputDecoration(
+          hintText: "Select Date of Birth",
+          border: OutlineInputBorder(),
+        ),
+        onTap: () async {
+          DateTime? pickedDate = await showDatePicker(
+            context: context,
+            initialDate: DateTime(2000),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+          );
+
+          if (pickedDate != null) {
+            controller.text = pickedDate.toIso8601String().split("T").first;
+          }
+        },
+      );
+    }
+    // ---------- COUNTRY (Simple Country List Selector) ----------
+ else if (field == "country") {
+  List<String> countries = [
+    "United States",
+    "United Kingdom",
+    "Canada",
+    "Australia",
+    "India",
+    "Nigeria",
+    "Germany",
+    "France",
+    "China",
+    "Japan",
+    "Bangladesh",
+    "Nepal",
+    "Pakistan",
+  ];
+
+  String selectedCountry =
+      currentValue.isNotEmpty ? currentValue : countries.first;
+
+  controller.text = selectedCountry;
+
+  inputWidget = StatefulBuilder(
+    builder: (context, setState) {
+      return DropdownButtonFormField<String>(
+        value: selectedCountry,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+        ),
+        items: countries
+            .map(
+              (country) => DropdownMenuItem(
+                value: country,
+                child: Text(country),
+              ),
+            )
+            .toList(),
+        onChanged: (value) {
+          setState(() {
+            selectedCountry = value!;
+            controller.text = selectedCountry; // 🔥 THIS FIXES IT
+          });
+        },
+      );
+    },
+  );
+}
+    // ---------- DEFAULT TEXT FIELD ----------
+    else {
+      inputWidget = TextField(
+        controller: controller,
+        decoration: const InputDecoration(
+          hintText: "Enter your address",
+          border: OutlineInputBorder(),
+        ),
+      );
+    }
 
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Text("Edit $field"),
-        content: TextField(controller: controller),
+        title: Text("Edit ${field[0].toUpperCase()}${field.substring(1)}"),
+        content: inputWidget,
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
