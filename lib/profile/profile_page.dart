@@ -130,23 +130,29 @@ class _ProfilePageState extends State<ProfilePage> {
       );
     }
     // ---------- GENDER (Dropdown) ----------
-    else if (field == "gender") {
-      String selectedGender = currentValue.isNotEmpty ? currentValue : "Male";
+     else if (field == "gender") {
+      String selectedGender =
+          currentValue.isNotEmpty ? currentValue : "Male";
 
       inputWidget = StatefulBuilder(
-        builder: (context, setState) {
+        builder: (context, setStateDialog) {
           return DropdownButtonFormField<String>(
             value: selectedGender,
-            decoration: const InputDecoration(border: OutlineInputBorder()),
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+            ),
             items: ["Male", "Female", "Other"]
                 .map(
-                  (gender) =>
-                      DropdownMenuItem(value: gender, child: Text(gender)),
+                  (gender) => DropdownMenuItem(
+                    value: gender,
+                    child: Text(gender),
+                  ),
                 )
                 .toList(),
             onChanged: (value) {
-              setState(() {
+              setStateDialog(() {
                 selectedGender = value!;
+                controller.text = selectedGender;
               });
             },
           );

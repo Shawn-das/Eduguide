@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
     '/home': (context) => HomeScreen(),
     '/profile': (context) => const ProfilePage(),
     '/university': (context) => const UniversityPage(),
-    '/courses': (context) => const CoursesPage(),
+    '/courses': (context) => const CoursesPage(courses: []),
     '/ai': (context) => const AIPredictionPage(),
     '/status': (context) => const ApplicationStatusPage(),
     '/forum': (context) => const AdminForumPage(),
