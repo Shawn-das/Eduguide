@@ -3,32 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
-// ─────────────────────────────────────────────────────────────────────────────
-// SUPABASE SQL QUERIES — (All queries are already in find_university_page.dart)
-// Additional queries used in this file:
-//
-// -- Fetch full university detail by id
-// SELECT * FROM universities WHERE id = '<university_id>';
-//
-// -- Check if university is saved by current user
-// SELECT id FROM saved_universities
-// WHERE user_id = auth.uid() AND university_id = '<university_id>';
-//
-// -- Save a university
-// INSERT INTO saved_universities (user_id, university_id)
-// VALUES (auth.uid(), '<university_id>');
-//
-// -- Unsave a university
-// DELETE FROM saved_universities
-// WHERE user_id = auth.uid() AND university_id = '<university_id>';
-//
-// -- Get courses offered by this university (for View Courses button)
-// SELECT * FROM courses WHERE university_name = '<university_name>'
-// ORDER BY created_at DESC;
-//
-// ─────────────────────────────────────────────────────────────────────────────
-
 class UniversityDetailPage extends StatefulWidget {
   final Map<String, dynamic> university;
 

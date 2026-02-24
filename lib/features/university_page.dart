@@ -2,11 +2,7 @@ import 'package:eduguide/features/university_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// SUPABASE SQL QUERIES — Run these in Supabase SQL Editor
-// ─────────────────────────────────────────────────────────────────────────────
-//
-// -- STEP 1: Create universities table
+
 // CREATE TABLE universities (
 //   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
 //   name TEXT NOT NULL,
@@ -37,43 +33,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 //   application_fee INTEGER,
 //   created_at TIMESTAMPTZ DEFAULT NOW()
 // );
-//
-// -- STEP 2: Enable RLS + allow public read
-// ALTER TABLE universities ENABLE ROW LEVEL SECURITY;
-// CREATE POLICY "Allow public read" ON universities FOR SELECT USING (true);
-//
-// -- STEP 3: Create saved_universities table
-// CREATE TABLE saved_universities (
-//   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-//   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
-//   university_id UUID REFERENCES universities(id) ON DELETE CASCADE,
-//   saved_at TIMESTAMPTZ DEFAULT NOW(),
-//   UNIQUE(user_id, university_id)
-// );
-// ALTER TABLE saved_universities ENABLE ROW LEVEL SECURITY;
-// CREATE POLICY "Users manage their saved universities" ON saved_universities
-//   FOR ALL USING (auth.uid() = user_id);
-//
-// -- STEP 4: Insert sample data
-// INSERT INTO universities (name, country, region, website_url, apply_url, world_ranking, acceptance_rate, avg_tuition_fee_per_year, overview, founded_year, total_students, campus_type, programs_offered, popular_programs, min_gpa, ielts_required, ielts_min_score, toefl_min_score, application_deadline, application_fee, facilities, housing_available, international_students_percent)
-// VALUES
-//   ('University of Sydney', 'Australia', 'New South Wales', 'https://www.sydney.edu.au', 'https://www.sydney.edu.au/apply', 42, 33.00, 40000, 'One of Australia''s leading research universities, founded in 1850, offering world-class education across a range of disciplines.', 1850, 73000, 'Urban', 'Arts,Business,Engineering,Law,Medicine,Science,Architecture', 'Computer Science,Medicine,Business Administration', 3.00, true, 6.5, 90, 'October 31, 2025', 100, 'Library,Sports Complex,Research Labs,Student Center,Health Clinic', true, 32.00),
-//   ('University of Melbourne', 'Australia', 'Victoria', 'https://www.unimelb.edu.au', 'https://www.unimelb.edu.au/apply', 33, 35.00, 45000, 'A world-leading university consistently ranked among the top universities globally, known for research excellence.', 1853, 65000, 'Urban', 'Arts,Business,Engineering,Law,Medicine,Science,Education', 'MBA,Law,Medicine,Engineering', 3.20, true, 7.0, 100, 'September 30, 2025', 120, 'Library,Sports Complex,Research Labs,Student Center,Swimming Pool,Medical Center', true, 40.00),
-//   ('University of Toronto', 'Canada', 'Ontario', 'https://www.utoronto.ca', 'https://www.utoronto.ca/apply', 21, 43.00, 35000, 'Canada''s top-ranked university with a strong global reputation in research and innovation.', 1827, 97000, 'Urban', 'Arts,Business,Engineering,Law,Medicine,Science,Computer Science', 'Engineering,Computer Science,Business,Medicine', 3.50, true, 7.0, 100, 'November 30, 2025', 150, 'Library,Research Labs,Sports Complex,Student Union,Innovation Hub', true, 25.00),
-//   ('University of Auckland', 'New Zealand', 'Auckland', 'https://www.auckland.ac.nz', 'https://www.auckland.ac.nz/apply', 87, 55.00, 28000, 'New Zealand''s leading university ranked in the top 1% of universities worldwide.', 1883, 46000, 'Urban', 'Arts,Business,Engineering,Law,Medicine,Science,Architecture', 'Engineering,Business,Law,Architecture', 2.80, true, 6.0, 80, 'December 1, 2025', 80, 'Library,Sports Facilities,Research Labs,Student Hub,Cafeteria', false, 28.00);
-//
-// -- STEP 5: Main search query
-// SELECT * FROM universities
-// WHERE
-//   country = 'Australia'
-//   AND region = 'New South Wales'
-//   AND world_ranking BETWEEN 1 AND 100
-//   AND avg_tuition_fee_per_year <= 50000
-//   AND acceptance_rate BETWEEN 10 AND 60
-//   AND name ILIKE '%Sydney%'
-// ORDER BY world_ranking ASC NULLS LAST;
-//
-// ─────────────────────────────────────────────────────────────────────────────
 
 class FindUniversityPage extends StatefulWidget {
   const FindUniversityPage({super.key});

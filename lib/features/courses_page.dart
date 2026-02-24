@@ -4,11 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
-// ─────────────────────────────────────────────────────────────────────────────
-// SUPABASE SQL QUERIES — Run these in Supabase SQL Editor
-// ─────────────────────────────────────────────────────────────────────────────
-//
-// -- STEP 1: Create the courses table
+
 // CREATE TABLE courses (
 //   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
 //   course_name TEXT NOT NULL,
@@ -25,21 +21,6 @@ import 'package:url_launcher/url_launcher.dart';
 //   university_website_url TEXT,
 //   created_at TIMESTAMPTZ DEFAULT NOW()
 // );
-//
-// -- STEP 2: Enable RLS + allow public read
-// ALTER TABLE courses ENABLE ROW LEVEL SECURITY;
-// CREATE POLICY "Allow public read" ON courses FOR SELECT USING (true);
-//
-// -- STEP 3: Insert sample data
-// INSERT INTO courses (course_name, country, region, tuition_fee_per_year, language_of_instruction, degree_type, duration_years, intake_month, ielts_required, university_name, university_website_url)
-// VALUES
-//   ('Bachelor of Computer Science', 'Australia', 'New South Wales', 20000, 'English', 'Bachelor', 4, 'January', true, 'University of Sydney', 'https://www.sydney.edu.au'),
-//   ('Master of Business Administration', 'Australia', 'Victoria', 35000, 'English', 'Master', 2, 'May', true, 'University of Melbourne', 'https://www.unimelb.edu.au'),
-//   ('PhD in Data Science', 'Australia', 'Queensland', 28000, 'English', 'PhD', 3, 'September', false, 'University of Queensland', 'https://www.uq.edu.au'),
-//   ('Diploma in Information Technology', 'Australia', 'Western Australia', 15000, 'English', 'Diploma', 1, 'January', false, 'Curtin University', 'https://www.curtin.edu.au'),
-//   ('Bachelor of Engineering', 'Canada', 'Ontario', 25000, 'English', 'Bachelor', 4, 'September', true, 'University of Toronto', 'https://www.utoronto.ca');
-//
-// ─────────────────────────────────────────────────────────────────────────────
 
 class FindYourCoursePage extends StatefulWidget {
   const FindYourCoursePage({super.key});
