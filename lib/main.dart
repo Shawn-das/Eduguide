@@ -26,16 +26,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        routes: {
-    '/home': (context) => HomeScreen(),
-    '/profile': (context) => const ProfilePage(),
-    '/university': (context) => const UniversityPage(),
-    '/courses': (context) => const CoursesPage(courses: []),
-    '/ai': (context) => const AIPredictionPage(),
-    '/status': (context) => const ApplicationStatusPage(),
-    '/forum': (context) => const AdminForumPage(),
-    '/about': (context) => const AboutUsPage(),
-  },
-      debugShowCheckedModeBanner: false, home:Onboarding());
+      routes: {
+        '/home': (context) => HomeScreen(),
+        '/profile': (context) => const ProfilePage(),
+        '/university': (context) => const FindUniversityPage(),
+
+        '/courses': (context) => const FindYourCoursePage(),
+        '/ai': (context) => const AIPredictionPage(),
+        '/status': (context) => const ApplicationStatusPage(),
+        '/forum': (context) => const AdminForumPage(),
+        '/about': (context) => const AboutUsPage(),
+      },
+      debugShowCheckedModeBanner: false,
+      home: Onboarding(),
+    );
   }
 }
