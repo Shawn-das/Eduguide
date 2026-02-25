@@ -1,11 +1,9 @@
 import 'package:eduguide/admin/admin_login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
- // your existing admin login page
+ 
 
-// ─────────────────────────────────────────────────────────────────────────────
 // Profile Model
-// ─────────────────────────────────────────────────────────────────────────────
 
 class UserProfile {
   final String id;
@@ -51,9 +49,7 @@ class UserProfile {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
 // Dashboard Drawer
-// ─────────────────────────────────────────────────────────────────────────────
 
 class DashboardDrawer extends StatefulWidget {
   const DashboardDrawer({super.key});
@@ -70,15 +66,15 @@ class _DashboardDrawerState extends State<DashboardDrawer>
   late AnimationController _animCtrl;
   late Animation<double> _fadeAnim;
 
-  // ── Design tokens ─────────────────────────────────────────────────────────
+  
   static const Color _navy = Color(0xFF0D1F5C);
-  static const Color _blue = Color(0xFF1565C0);
+ // static const Color _blue = Color(0xFF1565C0);
   static const Color _sky = Color(0xFF1E88E5);
-  static const Color _accent = Color(0xFF00B0FF);
+  //static const Color _accent = Color(0xFF00B0FF);
   static const Color _surface = Color(0xFFF0F4FF);
-  static const Color _cardBg = Colors.white;
+  //static const Color _cardBg = Colors.white;
 
-  // ── Nav items ─────────────────────────────────────────────────────────────
+  // Nav items 
   static const List<_NavItem> _items = [
     _NavItem('Home', Icons.home_rounded, '/home', _sky),
     _NavItem('Profile', Icons.person_rounded, '/profile', Color(0xFF7C3AED)),
@@ -168,10 +164,9 @@ class _DashboardDrawerState extends State<DashboardDrawer>
         ),
         child: Column(
           children: [
-            // ── Header ───────────────────────────────────────────────────
+            
             _ProfileHeader(profile: _profile, loading: _loading),
-
-            // ── Nav Grid ─────────────────────────────────────────────────
+            
             Expanded(
               child: FadeTransition(
                 opacity: _fadeAnim,
@@ -212,12 +207,12 @@ class _DashboardDrawerState extends State<DashboardDrawer>
 
                       const SizedBox(height: 24),
 
-                      // ── Profile info strip ───────────────────────────
+                      // Profile info strip
                       if (_profile != null) _ProfileInfoStrip(profile: _profile!),
 
                       const SizedBox(height: 16),
 
-                      // ── Sign Out ─────────────────────────────────────
+                      // Sign Out
                       _SignOutButton(onTap: () {
                         Navigator.pop(context);
                         // Add your sign out logic here
@@ -237,9 +232,7 @@ class _DashboardDrawerState extends State<DashboardDrawer>
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
 // Profile Header
-// ─────────────────────────────────────────────────────────────────────────────
 
 class _ProfileHeader extends StatelessWidget {
   final UserProfile? profile;
@@ -427,9 +420,7 @@ class _HeaderChip extends StatelessWidget {
       );
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
 // Nav Card
-// ─────────────────────────────────────────────────────────────────────────────
 
 class _NavItem {
   final String title;
@@ -663,9 +654,8 @@ class _DetailTile extends StatelessWidget {
       );
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+
 // Sign Out Button
-// ─────────────────────────────────────────────────────────────────────────────
 
 class _SignOutButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -708,9 +698,8 @@ class _SignOutButton extends StatelessWidget {
       );
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+
 // Loading Shimmer (profile skeleton)
-// ─────────────────────────────────────────────────────────────────────────────
 
 class _LoadingShimmerProfile extends StatefulWidget {
   const _LoadingShimmerProfile();
