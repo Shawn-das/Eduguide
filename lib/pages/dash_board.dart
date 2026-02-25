@@ -537,9 +537,8 @@ class _NavCardState extends State<_NavCard>
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
 // Profile Info Strip
-// ─────────────────────────────────────────────────────────────────────────────
+
 
 class _ProfileInfoStrip extends StatelessWidget {
   final UserProfile profile;

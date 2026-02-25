@@ -1,7 +1,6 @@
 //import 'package:eduguide/authentication/onboarding.dart';
 import 'package:eduguide/authentication/onboarding.dart';
 import 'package:eduguide/features/about_us_page.dart';
-import 'package:eduguide/features/admin_forum_page.dart';
 import 'package:eduguide/features/ai_prediction.dart';
 import 'package:eduguide/features/application_status.dart';
 import 'package:eduguide/features/courses_page.dart';
@@ -34,7 +33,6 @@ class MyApp extends StatelessWidget {
         '/courses': (context) => const FindYourCoursePage(),
         '/ai': (context) => const AIPredictionPage(),
         '/status': (context) => const ApplicationStatusPage(),
-        '/forum': (context) => const AdminForumPage(),
         '/about': (context) => const AboutUsPage(),
       },
       debugShowCheckedModeBanner: false,
