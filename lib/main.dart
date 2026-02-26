@@ -4,6 +4,7 @@ import 'package:eduguide/features/about_us_page.dart';
 import 'package:eduguide/features/ai_prediction.dart';
 import 'package:eduguide/features/application_status.dart';
 import 'package:eduguide/features/courses_page.dart';
+import 'package:eduguide/features/suggestion_based_on_profile.dart';
 import 'package:eduguide/features/university_page.dart';
 import 'package:eduguide/pages/home_page.dart';
 import 'package:eduguide/profile/profile_page.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         '/ai': (context) => const AIPredictionPage(),
         '/status': (context) => const ApplicationStatusPage(),
         '/about': (context) => const AboutUsPage(),
+        '/recommendations': (context) => const RecommendationPage(),
       },
       debugShowCheckedModeBanner: false,
       home: Onboarding(),

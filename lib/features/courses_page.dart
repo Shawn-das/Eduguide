@@ -22,6 +22,7 @@ import 'package:url_launcher/url_launcher.dart';
 //   created_at TIMESTAMPTZ DEFAULT NOW()
 // );
 
+
 class FindYourCoursePage extends StatefulWidget {
   const FindYourCoursePage({super.key});
 

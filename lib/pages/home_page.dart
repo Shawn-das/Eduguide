@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:eduguide/features/suggestion_based_on_profile.dart';
 import 'package:eduguide/pages/dash_board.dart';
 import 'package:eduguide/pages/university_per_country_page.dart';
 import 'package:eduguide/profile/profile_page.dart';
@@ -610,8 +611,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       _SectionTitle("Suggested For You"),
                       const SizedBox(height: 15),
                       _SuggestionsBanner(
-                        onTap: () => Navigator.pushNamed(
-                            context, '/suggestions'),
+                        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const RecommendationPage()),
+        ),
                       ),
                       const SizedBox(height: 24),
 
@@ -1430,9 +1433,10 @@ class _MiniChip extends StatelessWidget {
 class _SuggestionsBanner extends StatelessWidget {
   final VoidCallback onTap;
   const _SuggestionsBanner({required this.onTap});
+
   @override
   Widget build(BuildContext context) => GestureDetector(
-        onTap: onTap,
+        onTap: () => Navigator.pushNamed(context, '/recommendations'),
         child: Container(
           width: double.infinity,
           padding: const EdgeInsets.all(20),
@@ -1493,7 +1497,6 @@ class _SuggestionsBanner extends StatelessWidget {
         ),
       );
 }
-
 // ─────────────────────────────────────────────────────────────────────────────
 // Applications Banner
 // ─────────────────────────────────────────────────────────────────────────────
