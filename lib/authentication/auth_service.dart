@@ -3,7 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class AuthService {
   final SupabaseClient _supabase = Supabase.instance.client;
 
-  //sign in
+  // Sign in
   Future<AuthResponse> signInWithEmailPassword(
     String email,
     String password,
@@ -14,7 +14,7 @@ class AuthService {
     );
   }
 
-  //sign up
+  // Sign up
   Future<AuthResponse> signUpWithEmailPassword(
     String email,
     String password,
@@ -22,15 +22,30 @@ class AuthService {
     return await _supabase.auth.signUp(email: email, password: password);
   }
 
-  //sign out
+  // Sign out
   Future<void> signOut() async {
     await _supabase.auth.signOut();
   }
 
-  //get user email
+  // Get user email
   String? getCurrentUserEmail() {
     final session = _supabase.auth.currentSession;
     final user = session?.user;
     return user?.email;
+  }
+
+  // Send password reset email
+  Future<void> sendPasswordResetEmail(String email) async {
+    await _supabase.auth.resetPasswordForEmail(
+      email,
+      redirectTo: 'eduguide://callback',
+    );
+  }
+
+  // Update to new password
+  Future<void> updatePassword(String newPassword) async {
+    await _supabase.auth.updateUser(
+      UserAttributes(password: newPassword),
+    );
   }
 }

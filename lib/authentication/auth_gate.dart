@@ -1,33 +1,42 @@
 import 'package:eduguide/authentication/login_page.dart';
+import 'package:eduguide/authentication/reset_password_page.dart';
 import 'package:eduguide/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class AuthGate extends StatelessWidget {
+class AuthGate extends StatefulWidget {
   const AuthGate({super.key});
 
   @override
+  State<AuthGate> createState() => _AuthGateState();
+}
+
+class _AuthGateState extends State<AuthGate> {
+  @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      //Listen to auth state changes
+    return StreamBuilder<AuthState>(
       stream: Supabase.instance.client.auth.onAuthStateChange,
-      //bUild appropriate page on auth state
       builder: (context, snapshot) {
-        //loading...
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
         }
 
-        //check if there is a valid session currently
-        final session = snapshot.hasData ? snapshot.data!.session : null;
+        final authState = snapshot.data;
+        final session = authState?.session;
+        final event = authState?.event;
+
+        //When user clicks the reset link in email, this event fires
+        if (event == AuthChangeEvent.passwordRecovery) {
+          return const ResetPasswordPage();
+        }
 
         if (session != null) {
           return ProfilePage();
         }
 
-        return LogIn();
+        return const LogIn();
       },
     );
   }
