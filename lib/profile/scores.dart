@@ -16,7 +16,7 @@ class _ScorePageState extends State<ScorePage> {
   String? editingExam;
   Map<String, dynamic>? existingScores;
 
-  // ================= CONTROLLERS =================
+  //             CONTROLLERS 
 
   // IELTS
   final ieltsOverall = TextEditingController();
@@ -44,8 +44,6 @@ class _ScorePageState extends State<ScorePage> {
   final gmatQuant = TextEditingController();
   final gmatAwa = TextEditingController();
   final gmatIr = TextEditingController();
-
-  // =================================================
 
   @override
   void initState() {
@@ -99,7 +97,7 @@ class _ScorePageState extends State<ScorePage> {
     existingScores = dataMap.cast<String, dynamic>();
   });
 
-  // ===== IELTS =====
+  //IELTS
   if (dataMap["IELTS"] != null) {
     final d = dataMap["IELTS"];
     ieltsOverall.text = d["overall"]?.toString() ?? "";
@@ -109,7 +107,7 @@ class _ScorePageState extends State<ScorePage> {
     ieltsSpeaking.text = d["speaking"]?.toString() ?? "";
   }
 
-  // ===== GRE =====
+  //GRE
   if (dataMap["GRE"] != null) {
     final d = dataMap["GRE"];
     greOverall.text = d["overall"]?.toString() ?? "";
@@ -118,7 +116,7 @@ class _ScorePageState extends State<ScorePage> {
     greAnalytical.text = d["analytical"]?.toString() ?? "";
   }
 
-  // ===== TOEFL =====
+  // TOEFL 
   if (dataMap["TOEFL"] != null) {
     final d = dataMap["TOEFL"];
     toeflOverall.text = d["overall"]?.toString() ?? "";
@@ -128,7 +126,7 @@ class _ScorePageState extends State<ScorePage> {
     toeflSpeaking.text = d["speaking"]?.toString() ?? "";
   }
 
-  // ===== GMAT =====
+  // GMAT 
   if (dataMap["GMAT"] != null) {
     final d = dataMap["GMAT"];
     gmatOverall.text = d["overall"]?.toString() ?? "";

@@ -74,7 +74,7 @@ class _FindUniversityPageState extends State<FindUniversityPage> {
     super.dispose();
   }
 
-  // ─── Supabase Methods ────────────────────────────────────────────────────
+  //  Supabase Methods 
 
   Future<void> _loadCountries() async {
     try {
@@ -171,7 +171,7 @@ class _FindUniversityPageState extends State<FindUniversityPage> {
         SnackBar(content: Text(msg), backgroundColor: Colors.red));
   }
 
-  // ─── Build ───────────────────────────────────────────────────────────────
+  //  Build 
 
   @override
   Widget build(BuildContext context) {
@@ -286,7 +286,7 @@ class _FindUniversityPageState extends State<FindUniversityPage> {
     );
   }
 
-  // ─── UI Helpers ──────────────────────────────────────────────────────────
+  // UI Helpers
 
   Widget _buildSearchBar() {
     return TextField(

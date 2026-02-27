@@ -1,6 +1,6 @@
-import 'package:eduguide/authentication/login_page.dart';
+import 'package:eduguide/authentication/onboarding.dart';
 import 'package:eduguide/authentication/reset_password_page.dart';
-import 'package:eduguide/profile/profile_page.dart';
+import 'package:eduguide/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -33,10 +33,10 @@ class _AuthGateState extends State<AuthGate> {
         }
 
         if (session != null) {
-          return ProfilePage();
+          return HomeScreen();
         }
 
-        return const LogIn();
+        return const Onboarding();
       },
     );
   }

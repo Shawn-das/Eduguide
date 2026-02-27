@@ -71,7 +71,7 @@ class _FindYourCoursePageState extends State<FindYourCoursePage> {
     super.dispose();
   }
 
-  // ─── Supabase Methods ─────────────────────────────────────────────────────
+  // Supabase Methods
 
   Future<void> _loadCountries() async {
     try {
@@ -205,7 +205,7 @@ class _FindYourCoursePageState extends State<FindYourCoursePage> {
     );
   }
 
-  // ─── Build ────────────────────────────────────────────────────────────────
+  // Build
 
   @override
   Widget build(BuildContext context) {
@@ -398,7 +398,7 @@ class _FindYourCoursePageState extends State<FindYourCoursePage> {
     );
   }
 
-  // ─── UI Helpers ───────────────────────────────────────────────────────────
+  //  UI Helpers 
 
   Widget _buildSearchBar() {
     return TextField(

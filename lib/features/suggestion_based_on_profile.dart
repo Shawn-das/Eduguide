@@ -46,7 +46,7 @@ class _RecommendationPageState extends State<RecommendationPage>
     super.dispose();
   }
 
-  // ─────────────────────────── DATA LOADING ───────────────────────────
+  //  DATA LOADING
 
   Future<void> _loadAllDataAndRecommend() async {
     setState(() {
@@ -143,7 +143,7 @@ class _RecommendationPageState extends State<RecommendationPage>
     }
   }
 
-  // ─────────────────────────── SCORING LOGIC ───────────────────────────
+  // SCORING LOGIC
 
   double _getBestCgpa(List<Map<String, dynamic>> quals) {
     if (quals.isEmpty) return 0;
@@ -289,7 +289,7 @@ class _RecommendationPageState extends State<RecommendationPage>
     return true;
   }
 
-  // ─────────────────────────── HELPER UI ───────────────────────────
+  //HELPER UI 
 
   Color _matchColor(int score) {
     if (score >= _topMatch) return const Color(0xFF22C55E);
@@ -303,7 +303,7 @@ class _RecommendationPageState extends State<RecommendationPage>
     return 'Good Match';
   }
 
-  // ─────────────────────────── CUSTOM BOTTOM NAV (no item selected) ───────────────────────────
+  //  CUSTOM BOTTOM NAV (no item selected) 
 
   Widget _buildBottomNav() {
     return Container(
@@ -374,7 +374,7 @@ class _RecommendationPageState extends State<RecommendationPage>
     );
   }
 
-  // ─────────────────────────── BUILD ───────────────────────────
+  // BUILD 
 
   @override
   Widget build(BuildContext context) {
@@ -383,13 +383,13 @@ class _RecommendationPageState extends State<RecommendationPage>
       appBar: AppBar(
         backgroundColor: Colors.blue,
         elevation: 0,
-        // ✅ Back arrow will take user back to home/wherever they came from
+        // Back arrow will take user back to home/wherever they came from
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
-          'AI Recommendations',
+          'Recommendations',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         actions: [
@@ -434,7 +434,7 @@ class _RecommendationPageState extends State<RecommendationPage>
                     ),
                   ],
                 ),
-      // ✅ Custom bottom nav with NO tab highlighted
+      // Custom bottom nav with NO tab highlighted
       bottomNavigationBar: _buildBottomNav(),
     );
   }
@@ -518,7 +518,7 @@ class _RecommendationPageState extends State<RecommendationPage>
     );
   }
 
-  // ─────────────────────────── COURSES LIST ───────────────────────────
+  //  COURSES LIST 
 
   Widget _buildCoursesList() {
     if (recommendedCourses.isEmpty) {
@@ -645,7 +645,7 @@ class _RecommendationPageState extends State<RecommendationPage>
     );
   }
 
-  // ─────────────────────────── UNIVERSITIES LIST ───────────────────────────
+  //  UNIVERSITIES LIST
 
   Widget _buildUniversitiesList() {
     if (recommendedUniversities.isEmpty) {
@@ -776,7 +776,7 @@ class _RecommendationPageState extends State<RecommendationPage>
     );
   }
 
-  // ─────────────────────────── SMALL WIDGETS ───────────────────────────
+  // SMALL WIDGETS 
 
   Widget _chip(IconData icon, String label, {Color? color}) {
     final c = color ?? Colors.blueGrey.shade700;

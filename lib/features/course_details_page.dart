@@ -29,7 +29,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
     _checkIfSaved();
   }
 
-  // ─── Supabase Methods ─────────────────────────────────────────────────────
+  //  Supabase Methods 
 
   Future<void> _fetchFullDetail() async {
     try {
@@ -121,7 +121,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
     ));
   }
 
-  // ─── Build ────────────────────────────────────────────────────────────────
+  //  Build 
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +156,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
     );
   }
 
-  // ─── Sliver AppBar ────────────────────────────────────────────────────────
+  // Sliver AppBar 
 
   Widget _buildSliverAppBar() {
     return SliverAppBar(
@@ -239,7 +239,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
     );
   }
 
-  // ─── Section Cards ────────────────────────────────────────────────────────
+  //  Section Cards 
 
   Widget _buildUniversityInfoCard() {
     return _buildCard(
@@ -452,7 +452,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
     );
   }
 
-  // ─── Bottom Buttons ───────────────────────────────────────────────────────
+  //  Bottom Buttons 
 
   Widget _buildBottomButtons() {
     return Container(
@@ -507,7 +507,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
     );
   }
 
-  // ─── UI Helpers ───────────────────────────────────────────────────────────
+  // UI Helpers 
 
   Widget _buildCard({
     required String title,

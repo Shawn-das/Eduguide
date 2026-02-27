@@ -1,5 +1,6 @@
 import 'package:app_links/app_links.dart';
-import 'package:eduguide/authentication/onboarding.dart';
+import 'package:eduguide/authentication/auth_gate.dart';
+//import 'package:eduguide/authentication/onboarding.dart';
 import 'package:eduguide/authentication/reset_password_page.dart';
 import 'package:eduguide/features/about_us_page.dart';
 import 'package:eduguide/features/ai_prediction.dart';
@@ -99,7 +100,7 @@ class _MyAppState extends State<MyApp> {
         '/about': (context) => const AboutUsPage(),
         '/recommendations': (context) => const RecommendationPage(),
       },
-      home: Onboarding(),
+      home: const AuthGate(),
     );
   }
 }

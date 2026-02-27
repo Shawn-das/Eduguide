@@ -211,15 +211,6 @@ class _DashboardDrawerState extends State<DashboardDrawer>
                       if (_profile != null) _ProfileInfoStrip(profile: _profile!),
 
                       const SizedBox(height: 16),
-
-                      // Sign Out
-                      _SignOutButton(onTap: () {
-                        Navigator.pop(context);
-                        // Add your sign out logic here
-                        // Supabase.instance.client.auth.signOut();
-                      }),
-
-                      const SizedBox(height: 16),
                     ],
                   ),
                 ),
@@ -652,51 +643,6 @@ class _DetailTile extends StatelessWidget {
         ),
       );
 }
-
-
-// Sign Out Button
-
-class _SignOutButton extends StatelessWidget {
-  final VoidCallback onTap;
-  const _SignOutButton({required this.onTap});
-
-  @override
-  Widget build(BuildContext context) => GestureDetector(
-        onTap: onTap,
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 14),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: Colors.red.withOpacity(0.2)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.red.withOpacity(0.06),
-                blurRadius: 8,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.logout_rounded, size: 18, color: Colors.red.shade400),
-              const SizedBox(width: 8),
-              Text(
-                'Sign Out',
-                style: TextStyle(
-                  color: Colors.red.shade400,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14,
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-}
-
 
 // Loading Shimmer (profile skeleton)
 

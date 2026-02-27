@@ -26,7 +26,7 @@ class _DocumentPageState extends State<DocumentPage> {
     fetchDocuments();
   }
 
-  // ================= FETCH DOCUMENTS =================
+  // FETCH DOCUMENTS 
 
   Future<void> fetchDocuments() async {
     final user = supabase.auth.currentUser;
@@ -44,7 +44,7 @@ class _DocumentPageState extends State<DocumentPage> {
     });
   }
 
-  // ================= OPEN DOCUMENT =================
+  //  OPEN DOCUMENT 
 
   Future<void> openDocument(String filePath) async {
     try {
@@ -64,7 +64,7 @@ class _DocumentPageState extends State<DocumentPage> {
     }
   }
 
-  // ================= DELETE DOCUMENT =================
+  // DELETE DOCUMENT 
 
   Future<void> deleteDocument(Map<String, dynamic> doc) async {
     try {
@@ -94,7 +94,7 @@ class _DocumentPageState extends State<DocumentPage> {
     }
   }
 
-  // ================= DELETE CONFIRMATION =================
+  //  DELETE CONFIRMATION
 
   void showDeleteDialog(Map<String, dynamic> doc) {
     showDialog(
@@ -122,7 +122,7 @@ class _DocumentPageState extends State<DocumentPage> {
     );
   }
 
-  // ================= SHOW UPLOAD BOTTOM SHEET =================
+  //  SHOW UPLOAD BOTTOM SHEET
 
   void showUploadBottomSheet() {
     String? selectedType;
@@ -197,7 +197,7 @@ class _DocumentPageState extends State<DocumentPage> {
     );
   }
 
-  // ================= FILE UPLOAD =================
+  // FILE UPLOAD 
 
   Future<void> pickAndUploadFile(String? docType,
       {bool fromCamera = false}) async {
@@ -255,7 +255,7 @@ class _DocumentPageState extends State<DocumentPage> {
     }
   }
 
-  // ================= UI =================
+  //  UI
 
   @override
   Widget build(BuildContext context) {

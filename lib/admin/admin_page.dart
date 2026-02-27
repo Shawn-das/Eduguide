@@ -1,25 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// SUPABASE SETUP
-// Add to pubspec.yaml:
-//   supabase_flutter: ^2.3.0
-//
-// Initialize in main.dart:
-//   await Supabase.initialize(url: 'YOUR_SUPABASE_URL', anonKey: 'YOUR_ANON_KEY');
-// ─────────────────────────────────────────────────────────────────────────────
 
 final _supabase = Supabase.instance.client;
 
-// ─── Theme ────────────────────────────────────────────────────────────────────
+// Theme 
 const Color kPrimary = Color(0xFF1A237E);
 const Color kAccent = Color(0xFF00B0FF);
 const Color kSurface = Color(0xFFF0F4FF);
 
-// ─────────────────────────────────────────────────────────────────────────────
+
 // MODELS
-// ─────────────────────────────────────────────────────────────────────────────
 
 class UniversityModel {
   final String? id;
@@ -264,9 +255,10 @@ class CourseModel {
       };
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// ADMIN DASHBOARD PAGE
-// ─────────────────────────────────────────────────────────────────────────────
+
+
+//<=========== ADMIN DASHBOARD PAGE ==========>
+
 
 class AdminDashboardPage extends StatefulWidget {
   const AdminDashboardPage({super.key});
@@ -371,9 +363,8 @@ class _AdminDashboardPageState extends State<AdminDashboardPage>
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// UNIVERSITY TAB
-// ─────────────────────────────────────────────────────────────────────────────
+
+// <========== UNIVERSITY TAB ============>
 
 class UniversityManagementTab extends StatefulWidget {
   const UniversityManagementTab({super.key});
@@ -617,9 +608,8 @@ class _UniversityCard extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+
 // COURSE TAB
-// ─────────────────────────────────────────────────────────────────────────────
 
 class CourseManagementTab extends StatefulWidget {
   const CourseManagementTab({super.key});
@@ -865,9 +855,8 @@ class _CourseCard extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+
 // UNIVERSITY DIALOG (Add / Edit)
-// ─────────────────────────────────────────────────────────────────────────────
 
 void _showUniversityDialog(
     BuildContext context, UniversityModel? existing, VoidCallback onSaved) {
@@ -1180,9 +1169,9 @@ class _UniversityFormSheetState extends State<_UniversityFormSheet> {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+
 // COURSE DIALOG (Add / Edit)
-// ─────────────────────────────────────────────────────────────────────────────
+
 
 void _showCourseDialog(
     BuildContext context, CourseModel? existing, VoidCallback onSaved) {
@@ -1497,9 +1486,9 @@ class _CourseFormSheetState extends State<_CourseFormSheet> {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+
 // SHARED HELPERS
-// ─────────────────────────────────────────────────────────────────────────────
+
 
 Widget _Field(
   TextEditingController ctrl,

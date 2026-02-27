@@ -1,4 +1,3 @@
-import 'package:eduguide/authentication/login_page.dart';
 import 'package:eduguide/profile/custom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -22,16 +21,9 @@ class _ProfilePageState extends State<ProfilePage> {
     fetchProfile();
   }
 
+  // Just signOut, AuthGate handles navigation automatically
   Future<void> logout() async {
     await supabase.auth.signOut();
-
-    if (!mounted) return;
-
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (_) => LogIn()),
-      (route) => false,
-    );
   }
 
   Future<void> deleteAccount() async {
@@ -71,20 +63,14 @@ class _ProfilePageState extends State<ProfilePage> {
       // Delete exam scores
       await supabase.from('exam_scores').delete().eq('user_id', user.id);
 
-      // Logout
+      //Just signOut, AuthGate handles navigation automatically
       await supabase.auth.signOut();
 
-      if (!mounted) return;
-
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (_) => LogIn()),
-        (route) => false,
-      );
     } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Error deleting account: $e")));
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error deleting account: $e")),
+      );
     }
   }
 
@@ -118,7 +104,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
     Widget inputWidget;
 
-    // ---------- PHONE (Numeric Keyboard Only) ----------
     if (field == "phone") {
       inputWidget = TextField(
         controller: controller,
@@ -128,26 +113,17 @@ class _ProfilePageState extends State<ProfilePage> {
           border: OutlineInputBorder(),
         ),
       );
-    }
-    // ---------- GENDER (Dropdown) ----------
-     else if (field == "gender") {
-      String selectedGender =
-          currentValue.isNotEmpty ? currentValue : "Male";
+    } else if (field == "gender") {
+      String selectedGender = currentValue.isNotEmpty ? currentValue : "Male";
 
       inputWidget = StatefulBuilder(
         builder: (context, setStateDialog) {
           return DropdownButtonFormField<String>(
             value: selectedGender,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-            ),
+            decoration: const InputDecoration(border: OutlineInputBorder()),
             items: ["Male", "Female", "Other"]
-                .map(
-                  (gender) => DropdownMenuItem(
-                    value: gender,
-                    child: Text(gender),
-                  ),
-                )
+                .map((gender) =>
+                    DropdownMenuItem(value: gender, child: Text(gender)))
                 .toList(),
             onChanged: (value) {
               setStateDialog(() {
@@ -160,9 +136,7 @@ class _ProfilePageState extends State<ProfilePage> {
       );
 
       controller.text = selectedGender;
-    }
-    // ---------- DOB (Date Picker) ----------
-    else if (field == "dob") {
+    } else if (field == "dob") {
       inputWidget = TextField(
         controller: controller,
         readOnly: true,
@@ -183,57 +157,46 @@ class _ProfilePageState extends State<ProfilePage> {
           }
         },
       );
-    }
-    // ---------- COUNTRY (Simple Country List Selector) ----------
- else if (field == "country") {
-  List<String> countries = [
-    "United States",
-    "United Kingdom",
-    "Canada",
-    "Australia",
-    "India",
-    "Nigeria",
-    "Germany",
-    "France",
-    "China",
-    "Japan",
-    "Bangladesh",
-    "Nepal",
-    "Pakistan",
-  ];
+    } else if (field == "country") {
+      List<String> countries = [
+        "United States",
+        "United Kingdom",
+        "Canada",
+        "Australia",
+        "India",
+        "Nigeria",
+        "Germany",
+        "France",
+        "China",
+        "Japan",
+        "Bangladesh",
+        "Nepal",
+        "Pakistan",
+      ];
 
-  String selectedCountry =
-      currentValue.isNotEmpty ? currentValue : countries.first;
+      String selectedCountry =
+          currentValue.isNotEmpty ? currentValue : countries.first;
+      controller.text = selectedCountry;
 
-  controller.text = selectedCountry;
-
-  inputWidget = StatefulBuilder(
-    builder: (context, setState) {
-      return DropdownButtonFormField<String>(
-        value: selectedCountry,
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-        ),
-        items: countries
-            .map(
-              (country) => DropdownMenuItem(
-                value: country,
-                child: Text(country),
-              ),
-            )
-            .toList(),
-        onChanged: (value) {
-          setState(() {
-            selectedCountry = value!;
-            controller.text = selectedCountry; // 🔥 THIS FIXES IT
-          });
+      inputWidget = StatefulBuilder(
+        builder: (context, setState) {
+          return DropdownButtonFormField<String>(
+            value: selectedCountry,
+            decoration: const InputDecoration(border: OutlineInputBorder()),
+            items: countries
+                .map((country) =>
+                    DropdownMenuItem(value: country, child: Text(country)))
+                .toList(),
+            onChanged: (value) {
+              setState(() {
+                selectedCountry = value!;
+                controller.text = selectedCountry;
+              });
+            },
+          );
         },
       );
-    },
-  );
-}
-    // ---------- DEFAULT TEXT FIELD ----------
-    else {
+    } else {
       inputWidget = TextField(
         controller: controller,
         decoration: const InputDecoration(
@@ -256,6 +219,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ElevatedButton(
             onPressed: () async {
               await updateField(field, controller.text);
+              if (!mounted) return;
               Navigator.pop(context);
             },
             child: const Text("Save"),
@@ -338,18 +302,19 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(height: 12),
             Text(
               profileData?['full_name'] ?? '',
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 30),
 
-            /// EMAIL (NOT EDITABLE)
             infoTile(
               icon: Icons.email_outlined,
               label: "Email",
               value: profileData?['email'] ?? '',
             ),
 
-            /// PHONE
             infoTile(
               icon: Icons.phone,
               label: "Phone",
@@ -391,12 +356,12 @@ class _ProfilePageState extends State<ProfilePage> {
               editable: true,
               fieldName: 'country',
             ),
-            const SizedBox(height: 30),
+
             const SizedBox(height: 30),
 
             Row(
               children: [
-                /// LOGOUT BUTTON
+                // LOGOUT BUTTON
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed: logout,
@@ -417,7 +382,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
                 const SizedBox(width: 12),
 
-                /// DELETE BUTTON
+                // DELETE BUTTON
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed: deleteAccount,
@@ -439,12 +404,9 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
 
             const SizedBox(height: 30),
-
-            const SizedBox(height: 30),
           ],
         ),
       ),
-
       bottomNavigationBar: const CustomBottomNav(currentIndex: 0),
     );
   }

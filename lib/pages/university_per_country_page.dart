@@ -279,9 +279,8 @@ class _CountryUniversitiesPageState extends State<CountryUniversitiesPage> {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+
 // University Card
-// ─────────────────────────────────────────────────────────────────────────────
 
 class _UniversityCard extends StatelessWidget {
   final dynamic uni;
@@ -312,7 +311,7 @@ class _UniversityCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ── Banner / Gradient header ─────────────────────────────────
+            //  Banner / Gradient header
             ClipRRect(
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(20)),
@@ -328,7 +327,7 @@ class _UniversityCard extends StatelessWidget {
                   : _GradientBanner(name: uni['name']),
             ),
 
-            // ── Logo + Name row ──────────────────────────────────────────
+            //  Logo + Name row
             Padding(
               padding: const EdgeInsets.fromLTRB(14, 12, 14, 0),
               child: Row(
@@ -449,7 +448,7 @@ class _UniversityCard extends StatelessWidget {
               ),
             ),
 
-            // ── Badges ───────────────────────────────────────────────────
+            // Badges 
             Padding(
               padding: const EdgeInsets.fromLTRB(14, 10, 14, 0),
               child: Wrap(
@@ -485,7 +484,7 @@ class _UniversityCard extends StatelessWidget {
               ),
             ),
 
-            // ── Overview ─────────────────────────────────────────────────
+            //  Overview 
             if (uni['overview'] != null &&
                 (uni['overview'] as String).isNotEmpty)
               Padding(
@@ -501,7 +500,7 @@ class _UniversityCard extends StatelessWidget {
                 ),
               ),
 
-            // ── Popular programs ─────────────────────────────────────────
+            // Popular programs 
             if (uni['popular_programs'] != null &&
                 (uni['popular_programs'] as String).isNotEmpty)
               Padding(
@@ -527,7 +526,7 @@ class _UniversityCard extends StatelessWidget {
                 ),
               ),
 
-            // ── Footer ───────────────────────────────────────────────────
+            // Footer 
             Container(
               margin: const EdgeInsets.only(top: 12),
               padding:
@@ -628,9 +627,8 @@ class _UniversityCard extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+
 // Helpers
-// ─────────────────────────────────────────────────────────────────────────────
 
 class _GradientBanner extends StatelessWidget {
   final String? name;

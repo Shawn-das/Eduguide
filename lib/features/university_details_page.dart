@@ -47,7 +47,7 @@ class _UniversityDetailPageState extends State<UniversityDetailPage>
     super.dispose();
   }
 
-  // ─── Supabase Methods ────────────────────────────────────────────────────
+  // Supabase Methods
 
   Future<void> _fetchFullDetail() async {
     try {
@@ -131,7 +131,7 @@ class _UniversityDetailPageState extends State<UniversityDetailPage>
     ));
   }
 
-  // ─── Build ───────────────────────────────────────────────────────────────
+  //  Build 
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +172,7 @@ class _UniversityDetailPageState extends State<UniversityDetailPage>
     );
   }
 
-  // ─── Sliver AppBar ────────────────────────────────────────────────────────
+  // Sliver AppBar 
 
   Widget _buildSliverAppBar() {
     return SliverAppBar(
@@ -291,8 +291,7 @@ class _UniversityDetailPageState extends State<UniversityDetailPage>
     );
   }
 
-  // ─── Tab Views ────────────────────────────────────────────────────────────
-
+  //  Tab Views
   Widget _buildOverviewTab() {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -538,7 +537,7 @@ class _UniversityDetailPageState extends State<UniversityDetailPage>
     );
   }
 
-  // ─── Bottom Buttons ───────────────────────────────────────────────────────
+  //  Bottom Buttons
 
   Widget _buildBottomButtons() {
     return Container(
@@ -630,7 +629,7 @@ class _UniversityDetailPageState extends State<UniversityDetailPage>
     );
   }
 
-  // ─── UI Helpers ───────────────────────────────────────────────────────────
+  //  UI Helpers
 
   Widget _buildCard({
     required String title,
@@ -831,7 +830,7 @@ class _UniversityDetailPageState extends State<UniversityDetailPage>
   }
 }
 
-// ─── Tab Bar Delegate ─────────────────────────────────────────────────────────
+//Tab Bar Delegate 
 
 class _TabBarDelegate extends SliverPersistentHeaderDelegate {
   final TabBar tabBar;

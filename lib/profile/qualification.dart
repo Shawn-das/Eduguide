@@ -34,7 +34,7 @@ class _QualificationPageState extends State<QualificationPage> {
     fetchQualifications();
   }
 
-  // ---------------- FETCH ----------------
+  // FETCH 
   Future<void> fetchQualifications() async {
     final user = supabase.auth.currentUser;
     if (user == null) return;
@@ -50,7 +50,7 @@ class _QualificationPageState extends State<QualificationPage> {
     });
   }
 
-  // ---------------- CLEAR FORM ----------------
+  //  CLEAR FORM 
   void clearForm() {
     recordId = null;
     selectedQualification = null;
@@ -61,7 +61,7 @@ class _QualificationPageState extends State<QualificationPage> {
     setState(() {});
   }
 
-  // ---------------- VALIDATE CGPA ----------------
+  //  VALIDATE CGPA 
   String? validateCgpa(String? value) {
     if (value == null || value.isEmpty) {
       return "CGPA is required";
@@ -80,7 +80,7 @@ class _QualificationPageState extends State<QualificationPage> {
     return null;
   }
 
-  // ---------------- ADD ----------------
+  // ADD 
   Future<void> addQualification() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -105,7 +105,7 @@ class _QualificationPageState extends State<QualificationPage> {
     fetchQualifications();
   }
 
-  // ---------------- UPDATE ----------------
+  // UPDATE
   Future<void> updateQualification() async {
     if (!_formKey.currentState!.validate()) return;
     if (recordId == null) return;
@@ -121,13 +121,13 @@ class _QualificationPageState extends State<QualificationPage> {
     fetchQualifications();
   }
 
-  // ---------------- DELETE ----------------
+  // DELETE 
   Future<void> deleteQualification(String id) async {
     await supabase.from('qualifications').delete().eq('id', id);
     fetchQualifications();
   }
 
-  // ---------------- INPUT FIELD ----------------
+  // INPUT FIELD 
   Widget inputBox(
     String label,
     TextEditingController controller, {
@@ -180,7 +180,7 @@ class _QualificationPageState extends State<QualificationPage> {
           key: _formKey,
           child: Column(
             children: [
-              // ---------------- FORM ----------------
+              // FORM 
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -273,7 +273,7 @@ class _QualificationPageState extends State<QualificationPage> {
 
               const SizedBox(height: 16),
 
-              // ---------------- LIST ----------------
+              //  LIST 
               Expanded(
                 child: ListView.builder(
                   itemCount: qualificationList.length,

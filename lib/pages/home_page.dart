@@ -617,15 +617,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
                       ),
                       const SizedBox(height: 24),
-
-                      // ── Applications Banner ───────────────────────────
-                      _SectionTitle("My Applications"),
-                      const SizedBox(height: 15),
-                      _ApplicationsBanner(
-                        onTap: () => Navigator.pushNamed(
-                            context, '/applications'),
-                      ),
-                      const SizedBox(height: 24),
                     ],
                   ],
                 ),
@@ -635,9 +626,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
 // Section Title
-// ─────────────────────────────────────────────────────────────────────────────
 
 class _SectionTitle extends StatelessWidget {
   final String title;
@@ -647,9 +636,8 @@ class _SectionTitle extends StatelessWidget {
       style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold));
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+
 // Saved Header
-// ─────────────────────────────────────────────────────────────────────────────
 
 class _SavedHeader extends StatelessWidget {
   final int savedTab, uniCount, courseCount;
@@ -790,9 +778,8 @@ class _TabBtn extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+
 // Saved University Card
-// ─────────────────────────────────────────────────────────────────────────────
 
 class _SavedUniversityCard extends StatelessWidget {
   final dynamic uni;
@@ -899,9 +886,9 @@ class _SavedUniversityCard extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+
 // Saved Course Card
-// ─────────────────────────────────────────────────────────────────────────────
+
 
 class _SavedCourseCard extends StatelessWidget {
   final dynamic course;
@@ -1497,90 +1484,5 @@ class _SuggestionsBanner extends StatelessWidget {
         ),
       );
 }
-// ─────────────────────────────────────────────────────────────────────────────
-// Applications Banner
-// ─────────────────────────────────────────────────────────────────────────────
 
-class _ApplicationsBanner extends StatelessWidget {
-  final VoidCallback onTap;
-  const _ApplicationsBanner({required this.onTap});
-  @override
-  Widget build(BuildContext context) => GestureDetector(
-        onTap: onTap,
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            border:
-                Border.all(color: Colors.blue.shade100, width: 1.5),
-            boxShadow: const [
-              BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 8,
-                  offset: Offset(0, 4))
-            ],
-          ),
-          child: Row(children: [
-            Container(
-                width: 64,
-                height: 64,
-                decoration: BoxDecoration(
-                    color: Colors.orange.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(16)),
-                child: const Icon(
-                    Icons.assignment_turned_in_rounded,
-                    color: Colors.orange,
-                    size: 32)),
-            const SizedBox(width: 16),
-            Expanded(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                  const Text('My Applications',
-                      style: TextStyle(
-                          color: Color(0xFF1A237E),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16)),
-                  const SizedBox(height: 4),
-                  const Text(
-                      'Track and manage all your university applications in one place.',
-                      style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 12.5,
-                          height: 1.4)),
-                  const SizedBox(height: 10),
-                  Row(children: [
-                    _StatusChip('Pending', Colors.orange),
-                    const SizedBox(width: 6),
-                    _StatusChip('Accepted', Colors.green),
-                    const SizedBox(width: 6),
-                    _StatusChip('Review', Colors.blue),
-                  ]),
-                ])),
-            const Icon(Icons.chevron_right_rounded,
-                color: Colors.black26, size: 28),
-          ]),
-        ),
-      );
-}
 
-class _StatusChip extends StatelessWidget {
-  final String label;
-  final Color color;
-  const _StatusChip(this.label, this.color);
-  @override
-  Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(
-            horizontal: 8, vertical: 3),
-        decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: color.withOpacity(0.3))),
-        child: Text(label,
-            style: TextStyle(
-                color: color,
-                fontSize: 10,
-                fontWeight: FontWeight.w700)));
-}
