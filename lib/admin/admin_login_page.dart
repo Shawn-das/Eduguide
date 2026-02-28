@@ -1,5 +1,6 @@
+import 'package:eduguide/admin/admin_dashboard.dart';
 import 'package:flutter/material.dart';
-import 'admin_page.dart';
+
 
 class AdminLoginPage extends StatefulWidget {
   const AdminLoginPage({super.key});
@@ -197,10 +198,12 @@ class _AdminLoginPageState extends State<AdminLoginPage>
                                   Icons.email_outlined,
                                 ),
                                 validator: (v) {
-                                  if (v == null || v.trim().isEmpty)
+                                  if (v == null || v.trim().isEmpty) {
                                     return 'Email is required';
-                                  if (!v.contains('@'))
+                                  }
+                                  if (!v.contains('@')) {
                                     return 'Enter a valid email';
+                                  }
                                   return null;
                                 },
                               ),
@@ -226,8 +229,9 @@ class _AdminLoginPageState extends State<AdminLoginPage>
                                   ),
                                 ),
                                 validator: (v) {
-                                  if (v == null || v.isEmpty)
+                                  if (v == null || v.isEmpty) {
                                     return 'Password is required';
+                                  }
                                   if (v.length < 6) return 'Too short';
                                   return null;
                                 },

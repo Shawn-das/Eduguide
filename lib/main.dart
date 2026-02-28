@@ -48,31 +48,24 @@ class _MyAppState extends State<MyApp> {
 
     // Case 1: App already open, link clicked
     _appLinks.uriLinkStream.listen((uri) {
-      debugPrint('DEEPLINK stream: $uri');
       _handleDeepLink(uri);
     });
 
     // Case 2: App was closed, link opened the app
     final initialUri = await _appLinks.getInitialLink();
     if (initialUri != null) {
-      debugPrint('DEEPLINK initial: $initialUri');
       _handleDeepLink(initialUri);
     }
   }
 
   Future<void> _handleDeepLink(Uri uri) async {
-    debugPrint('DEEPLINK handling: $uri');
 
     final String? code = uri.queryParameters['code'];
-
-    debugPrint('DEEPLINK code=$code');
 
     if (code != null) {
       try {
         // Exchange the code for a session (PKCE flow)
         await Supabase.instance.client.auth.exchangeCodeForSession(code);
-
-        debugPrint('DEEPLINK session exchanged successfully');
 
         // Navigate to reset password screen
         navigatorKey.currentState?.pushAndRemoveUntil(
