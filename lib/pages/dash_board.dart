@@ -206,11 +206,6 @@ class _DashboardDrawerState extends State<DashboardDrawer>
                       ),
 
                       const SizedBox(height: 24),
-
-                      // Profile info strip
-                      if (_profile != null) _ProfileInfoStrip(profile: _profile!),
-
-                      const SizedBox(height: 16),
                     ],
                   ),
                 ),
@@ -287,10 +282,7 @@ class _ProfileHeader extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // Avatar + user info
-              if (loading)
-                const _LoadingShimmerProfile()
-              else
+            
                 Row(
                   children: [
                     // Avatar circle
@@ -328,35 +320,6 @@ class _ProfileHeader extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          const SizedBox(height: 2),
-                          Text(
-                            profile?.email ?? '',
-                            style: const TextStyle(
-                                color: Colors.white60, fontSize: 12),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          if (profile?.role != null) ...[
-                            const SizedBox(height: 6),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 3),
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.18),
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(color: Colors.white24),
-                              ),
-                              child: Text(
-                                profile!.role!.toUpperCase(),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w700,
-                                  letterSpacing: 1,
-                                ),
-                              ),
-                            ),
-                          ],
                         ],
                       ),
                     ),
@@ -364,18 +327,6 @@ class _ProfileHeader extends StatelessWidget {
                 ),
 
               const SizedBox(height: 16),
-
-              // Country + member since chips
-              if (profile != null)
-                Wrap(
-                  spacing: 8,
-                  children: [
-                    if (profile!.country != null)
-                      _HeaderChip(Icons.public, profile!.country!),
-                    if (profile!.gender != null)
-                      _HeaderChip(Icons.person_outline, profile!.gender!),
-                  ],
-                ),
             ],
           ),
         ),
@@ -384,32 +335,7 @@ class _ProfileHeader extends StatelessWidget {
   }
 }
 
-class _HeaderChip extends StatelessWidget {
-  final IconData icon;
-  final String label;
 
-  const _HeaderChip(this.icon, this.label);
-
-  @override
-  Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.14),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.white24),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, size: 12, color: Colors.white70),
-            const SizedBox(width: 4),
-            Text(label,
-                style: const TextStyle(
-                    color: Colors.white70, fontSize: 11, fontWeight: FontWeight.w500)),
-          ],
-        ),
-      );
-}
 
 // Nav Card
 
@@ -526,193 +452,4 @@ class _NavCardState extends State<_NavCard>
       ),
     );
   }
-}
-
-// Profile Info Strip
-
-
-class _ProfileInfoStrip extends StatelessWidget {
-  final UserProfile profile;
-
-  const _ProfileInfoStrip({required this.profile});
-
-  @override
-  Widget build(BuildContext context) {
-    final details = <_DetailRow>[];
-    if (profile.phone != null) details.add(_DetailRow(Icons.phone_rounded, 'Phone', profile.phone!));
-    if (profile.address != null) details.add(_DetailRow(Icons.location_on_rounded, 'Address', profile.address!));
-    if (profile.dob != null) details.add(_DetailRow(Icons.cake_rounded, 'Date of Birth', profile.dob!));
-
-    if (details.isEmpty) return const SizedBox.shrink();
-
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(18),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF1565C0).withOpacity(0.07),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 14, 16, 8),
-            child: Row(
-              children: [
-                Container(
-                  width: 3,
-                  height: 16,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF1565C0),
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                const Text(
-                  'Your Details',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 13,
-                    color: Color(0xFF1565C0),
-                    letterSpacing: 0.3,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const Divider(height: 1, indent: 16, endIndent: 16),
-          ...details.map((d) => _DetailTile(d)),
-          const SizedBox(height: 6),
-        ],
-      ),
-    );
-  }
-}
-
-class _DetailRow {
-  final IconData icon;
-  final String label;
-  final String value;
-  const _DetailRow(this.icon, this.label, this.value);
-}
-
-class _DetailTile extends StatelessWidget {
-  final _DetailRow row;
-  const _DetailTile(this.row);
-
-  @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(7),
-              decoration: BoxDecoration(
-                color: const Color(0xFF1565C0).withOpacity(0.08),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Icon(row.icon, size: 15, color: const Color(0xFF1565C0)),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(row.label,
-                      style: const TextStyle(
-                          fontSize: 10,
-                          color: Colors.black38,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 0.5)),
-                  Text(row.value,
-                      style: const TextStyle(
-                          fontSize: 13,
-                          color: Color(0xFF1A237E),
-                          fontWeight: FontWeight.w500),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-}
-
-// Loading Shimmer (profile skeleton)
-
-class _LoadingShimmerProfile extends StatefulWidget {
-  const _LoadingShimmerProfile();
-
-  @override
-  State<_LoadingShimmerProfile> createState() => _LoadingShimmerProfileState();
-}
-
-class _LoadingShimmerProfileState extends State<_LoadingShimmerProfile>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _ctrl;
-  late Animation<double> _anim;
-
-  @override
-  void initState() {
-    super.initState();
-    _ctrl = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1000))
-      ..repeat(reverse: true);
-    _anim = CurvedAnimation(parent: _ctrl, curve: Curves.easeInOut);
-  }
-
-  @override
-  void dispose() {
-    _ctrl.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) => AnimatedBuilder(
-        animation: _anim,
-        builder: (_, __) {
-          final opacity = 0.2 + _anim.value * 0.3;
-          return Row(
-            children: [
-              Container(
-                width: 58,
-                height: 58,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white.withOpacity(opacity),
-                ),
-              ),
-              const SizedBox(width: 14),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 140,
-                    height: 14,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(opacity),
-                      borderRadius: BorderRadius.circular(7),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Container(
-                    width: 100,
-                    height: 10,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(opacity * 0.7),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          );
-        },
-      );
 }
